@@ -32,6 +32,8 @@
     __weak IBOutlet UILabel *label;
     __weak IBOutlet UISegmentedControl *camResuSeg;
     
+	int logCounter;
+	
 }
 - (IBAction)newLog:(id)sender;
 - (IBAction)changeCamResu:(id)sender;

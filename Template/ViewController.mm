@@ -34,6 +34,8 @@
     
     
     markerArray = [[NSArray alloc]init];
+	
+	logCounter = 1;
     
     [self createLogFile];
 	   
@@ -120,11 +122,14 @@
             else
                 [label setBackgroundColor:[UIColor redColor]];
     
-    
+		
+
+	
+	
             //Log schreiben
             if ([logSwitch isOn ] && (currentTrackingValues.quality>0))
             {
-                
+				
                 NSDate *date = [[NSDate alloc] init];
                 NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
                 [formatter setDateFormat:@"HH_mm_ss__ddMMyy"];
@@ -143,11 +148,17 @@
                 [handle writeData:[markerPose dataUsingEncoding:NSUTF8StringEncoding]];
                 
                 
-                //screenshot erstellen
-                [self takeScreenshot:logDate];
-                 
-                //logswitch nach einem druchlauf deaktivieren
-                logSwitch.on = false;
+				if (logCounter > 29)
+				{
+					//logswitch nach 30 durchläufen deaktivieren
+					logSwitch.on = false;
+					logCounter = 1;
+					//screenshot erstellen
+					[self takeScreenshot:logDate];
+					
+				}else{
+					logCounter = logCounter + 1;
+				}
             }
     
 }
